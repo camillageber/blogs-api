@@ -10,7 +10,7 @@ const findUser = async ({ email, password }) => {
 };
 
 const authentication = async ({ email, password }) => {
-  const user = findUser({ email, password });
+  const user = await findUser({ email, password });
 
   const payload = {
     id: user.dataValues.id,
@@ -22,11 +22,11 @@ const token = generateToken(payload);
 
 console.log(token);
 
-  if (!user || user.password !== password) {
-    const err = new Error('Invalid fields');
-    err.status = 400;
-    throw err;
-  }
+  // if (!user || user.password !== password) {
+  //   const err = new Error('Invalid fields');
+  //   err.status = 400;
+  //   throw err;
+  // }
         
     return token;
 };
