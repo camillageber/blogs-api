@@ -3,7 +3,6 @@ const { generateToken } = require('../utils/JWT');
 
 const findUser = async ({ email, password }) => {
   const user = await User.findOne({
-    attributes: ['id', 'email', 'displayName'],
     where: { email, password },
 });
   return user;
@@ -11,7 +10,13 @@ const findUser = async ({ email, password }) => {
 
 const authentication = async ({ email, password }) => {
   const user = await findUser({ email, password });
+  console.log('user', user);
 
+  if (!user || user.password !== password) {
+    const err = new Error('Invalid fields');
+    err.status = 400;
+    throw err;
+  }
   const payload = {
     id: user.dataValues.id,
     displayName: user.dataValues.displayName,
@@ -21,12 +26,6 @@ const authentication = async ({ email, password }) => {
 const token = generateToken(payload);
 
 console.log(token);
-
-  // if (!user || user.password !== password) {
-  //   const err = new Error('Invalid fields');
-  //   err.status = 400;
-  //   throw err;
-  // }
         
     return token;
 };
