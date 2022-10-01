@@ -9,23 +9,7 @@ const secret = process.env.JWT_SECRET;
 const generateToken = (payload) => 
     jwt.sign(payload, secret, jwtConfig);
 
-const validateToken = async (token) => {
-        if (!token) {
-            const err = new Error('Token not found');
-            err.status = 401;
-            throw err;
-        }
-    
-        try {
-            const instrospection = await jwt.verify(token, secret);
-            return instrospection;
-        } catch (e) {
-            console.log('Err', e);
-            const err = new Error('Expired or invalid token');
-            err.status = 401;
-            throw err;
-        }        
-    };
+const validateToken = async (token) => jwt.verify(token, secret);
 
 module.exports = {
     generateToken,

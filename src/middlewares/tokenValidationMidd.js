@@ -1,18 +1,21 @@
 const { validateToken } = require('../utils/JWT');
 
 const tokenValidation = async (req, res, next) => {
-  const token = req.headers.authorization;
-  const payload = await validateToken(token);
-  
-  if (!payload) {
-      const err = new Error('Token not found');
-      err.status = 401;
-      throw err;
-  }
-  
-  req.data = payload;
+  try {
+    const token = req.headers.authorization;
+    // const payload = await validateToken(token);
+    
+    if (!token) {
+    return res.status(401).json({ message: 'Token not found' });
+    }
+    
+    const payload = await validateToken(token);
+    req.data = payload;
 
-  next();
+    next();
+  } catch (e) {
+    return res.status(401).json({ message: 'Expired or invalid token' });
+  }
 };
 
 module.exports = {
