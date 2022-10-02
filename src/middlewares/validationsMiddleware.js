@@ -47,7 +47,23 @@ const userValidation = (req, res, next) => {
   next();
 };
 
+const categorySchema = Joi.object({
+  name: Joi.string().required().messages({
+    'string.empty': missingFields,
+    'any.required': '"name" is required',
+  }),
+});
+
+const categoryValidation = (req, res, next) => {
+  const { error } = categorySchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
 module.exports = {
   loginValidation,
   userValidation,
+  categoryValidation,
 };
