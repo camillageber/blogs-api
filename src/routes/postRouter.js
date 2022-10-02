@@ -9,5 +9,6 @@ const routers = express.Router();
 // tokenValidation.tokenValidation, postController.createPost);
 
 routers.get('/', tokenValidation.tokenValidation, postController.findAllPosts);
+routers.get('/:id', tokenValidation.tokenValidation, postController.findPostById);
 
 module.exports = routers;

@@ -15,6 +15,23 @@ const findAllPosts = async () => {
   return posts;
 };
 
+const findPostById = async (id) => {
+  const posts = await BlogPost.findOne({
+    where: { id },
+      include: [
+          { model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+  });
+
+  if (!posts) {
+    const err = new Error('Post does not exist');
+    err.status = 404;
+    throw err;
+  }
+  return posts;
+};
+
 // const create = async ({ title, content, categoryIds }) => {
 //   const result = await sequelize.transaction(async (t) => {
 //     const newPost = await BlogPost.create(
@@ -46,5 +63,6 @@ const findAllPosts = async () => {
 // };
 
 module.exports = {
-  findAllPosts,  
+  findAllPosts,
+  findPostById,  
 };
