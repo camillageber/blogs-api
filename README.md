@@ -36,6 +36,7 @@ It was necessary to use categories for the posts, so we worked on the relation o
     <li> Sequelize </li>
     <li> Docker </li>
     <li> JWT </li>
+    <li> Joi </li>
     <li> Thunder Client</li>
     <li> Error Validation Middleware </li>
     <li> Authentication Middleware </li>
