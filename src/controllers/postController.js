@@ -19,16 +19,18 @@ const findPostById = async (req, res, next) => {
   }
 };
 
-// const createPost = async (req, res, next) => {
-//   try {
-//     const newPost = await postService.createPost(req.body);
-//     res.status(201).json(newPost);
-//   } catch (e) {
-//     next(e);
-//   }
-// };
+const createPost = async (req, res, next) => {
+  try {
+    const post = await postService.createPost(req.body, req.data.id);
+    if (post === 'somethingMissing') res.status(400).json({ message: '"categoryIds" not found' });
+    res.status(201).json(post);
+  } catch (e) {
+    next(e);
+  }
+};
 
 module.exports = {
   findAllPosts,
   findPostById,
+  createPost,
 };

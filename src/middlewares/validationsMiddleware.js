@@ -62,8 +62,32 @@ const categoryValidation = (req, res, next) => {
   next();
 };
 
+const postSchema = Joi.object({
+  title: Joi.string().required().messages({
+      'any.required': missingFields,
+      'string.empty': missingFields,
+  }),
+  content: Joi.string().required().messages({
+      'any.required': missingFields,
+      'string.empty': missingFields,
+  }),
+  categoryIds: Joi.required().messages({
+      'any.required': missingFields,
+      'string.empty': missingFields,
+  }),
+});
+
+const postValidation = (req, res, next) => {
+  const { error } = postSchema.validate(req.body);
+  if (error) {
+    return res.status(400).json({ message: error.message });
+  }
+  next();
+};
+
 module.exports = {
   loginValidation,
   userValidation,
   categoryValidation,
+  postValidation,
 };

@@ -1,9 +1,4 @@
-// const Sequelize = require('sequelize');
-const { BlogPost, Category, User } = require('../models');
-// const config = require('../config/config');
-
-// const env = process.env.NODE_ENV;
-// const sequelize = new Sequelize(config[env]);
+const { BlogPost, Category, User, PostCategory } = require('../models');
 
 const findAllPosts = async () => {
   const posts = await BlogPost.findAll({
@@ -32,37 +27,24 @@ const findPostById = async (id) => {
   return posts;
 };
 
-// const create = async ({ title, content, categoryIds }) => {
-//   const result = await sequelize.transaction(async (t) => {
-//     const newPost = await BlogPost.create(
-//       { title, content, categoryIds },
-//       {
-//         include: [{ model: Category, as: 'categories' }],
-//         transaction: t,
-//       },
-//       );
- 
-//       return newPost;
-//   });
-//   return result;
-// };
-  
-// const createPost = async ({ title, content, categoryIds }) => {
-//   const newPost = await create({ title, content, categoryIds });
- 
-//   const payload = {
-//     id: newPost.dataValues.id,
-//     title: newPost.dataValues.title,
-//     content: newPost.dataValues.content,
-//     userId: newPost.dataValues.userId,
-//     updated: newPost.dataValues.updated,
-//     published: newPost.dataValues.published,
-//   };
-      
-//   return payload;
-// };
+const createPost = async ({ title, content, categoryIds }, userId) => {
+  try {
+      const addedPost = await BlogPost.create({
+          title, content, userId,
+      });
+      const mapedPost = categoryIds.map((id) => ({
+          postId: addedPost.id,
+          categoryId: id,
+      }));
+      await PostCategory.bulkCreate(mapedPost);
+      return addedPost;
+  } catch (err) {
+      return 'somethingMissing';
+  }
+};
 
 module.exports = {
   findAllPosts,
-  findPostById,  
+  findPostById,
+  createPost, 
 };

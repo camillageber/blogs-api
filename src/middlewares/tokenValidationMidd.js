@@ -3,8 +3,7 @@ const { validateToken } = require('../utils/JWT');
 const tokenValidation = async (req, res, next) => {
   try {
     const token = req.headers.authorization;
-    // const payload = await validateToken(token);
-    
+     
     if (!token) {
     return res.status(401).json({ message: 'Token not found' });
     }
