@@ -106,7 +106,7 @@ It was necessary to use categories for the posts, so we worked on the relation o
   # The final result: 
 <div>
    <img align="center" width="800" src="https://user-images.githubusercontent.com/88116437/228020593-671fae36-983a-4915-b06b-84bbb55bceb6.png" />
-   <img align="center" width="800" src="https://s4.aconvert.com/convert/p3r68-cdx67/at8j4-rtlfc.png" />
+   <img align="center" width="800" src="https://user-images.githubusercontent.com/88116437/228020844-143a33d0-75ff-4acd-ab76-88d8ab4b0d7c.png" />
 </div>
 
   
